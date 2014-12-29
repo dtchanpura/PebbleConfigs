@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pebble Remote Controller configuration">
+    <meta name="author" content="Sergio Araki">
+
+    <title>Pebble Remote Controller configuration</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+
+
+
+    <div class="container">
+
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Give out some message...</h2>
+        <label for="inputMessage" class="sr-only">Message</label>
+        <input type="text" id="inputMessage" class="form-control" placeholder="Message" required autofocus><br>
+        <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Beam it to Pebble</button>
+      </form>
+
+      <div id="empty" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Error</h4>
+            </div>
+            <div class="modal-body">
+              <p>Write something atleast... like "Tell me your name..."</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    </div> <!-- /container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+    $('form').submit(false);
+    function saveOptions() {
+      var options = {
+        'message': $("#inputMessage").val(),
+        // 'port': $("#port").val()
+      }
+      return options;
+    }
+    $().ready(function() {
+        //$("button#cancel").click(function() {
+          //document.location = "pebblejs://close";
+        //});
+
+        $("button#submit").click(function(){
+          var message = $('#inputMessage').val();
+          //var port = $('#port').val();
+          if (message.length==0){
+            $('#empty').modal();
+          }
+          else {
+
+                var location = "pebblejs://close#" + encodeURIComponent(JSON.stringify(saveOptions()));
+                document.location = location;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
